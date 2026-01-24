@@ -380,9 +380,12 @@ MIT - Use freely, modify as needed, contribute back if you can.
 
 ## Acknowledgments
 
-Inspired by [Zevi Arnovitz's appearance on Lenny's Podcast](https://www.youtube.com/watch?v=1em64iUFt3U), where he discussed structured approaches to AI-assisted development. His insights on treating AI as a collaborative partner with clear processes shaped this workflow.
+**Key Inspirations:**
 
-Also inspired by:
+- **[Zevi Arnovitz on Lenny's Podcast](https://www.youtube.com/watch?v=1em64iUFt3U)** - His discussion on structured AI-assisted development shaped the philosophy behind this workflow. The idea of treating AI as a collaborative partner with clear processes came directly from his insights.
+
+- **[everything-claude-code](https://github.com/affaan-m/everything-claude-code)** by [@affaanmustafa](https://x.com/affaanmustafa) - A comprehensive Claude Code configuration collection (25k+ stars) that demonstrated the power of structured commands, agents, and skills. The TDD and code review patterns here were adapted from his battle-tested configs. Highly recommended for Claude Code users.
+
+Also built on:
 - Structured development practices (TDD, code review checklists)
 - The realization that AI coding assistants work dramatically better with clear context and processes
-- [everything-claude-code](https://github.com/affaan-m/everything-claude-code) for command patterns
