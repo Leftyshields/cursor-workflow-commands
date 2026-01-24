@@ -1,8 +1,10 @@
-# Cursor Workflow Commands
+# AI IDE Workflow Commands
 
-A structured set of slash commands for feature development in [Cursor IDE](https://cursor.sh).
+A structured set of prompt commands for feature development in AI-powered IDEs.
 
 Battle-tested commands that guide you through the full development lifecycle: from capturing issues to post-deployment reflection.
+
+**Works with:** Cursor, Claude Code, Windsurf, VS Code (+ AI extensions), and other AI IDEs.
 
 ![License](https://img.shields.io/badge/License-MIT-blue)
 
@@ -57,23 +59,158 @@ These commands provide **structure without bureaucracy**. Each command is a prom
 
 ## Installation
 
-### Option 1: Copy to your project (recommended)
+First, clone this repo:
 
 ```bash
-# Clone this repo
-git clone https://github.com/YOUR_USERNAME/cursor-workflow-commands.git
+git clone https://github.com/Leftyshields/cursor-workflow-commands.git
+cd cursor-workflow-commands
+```
 
-# Copy commands to your project
-cp -r cursor-workflow-commands/commands/ /path/to/your/project/.cursor/commands/
+Then follow the instructions for your IDE:
 
-# Create context directory for persistence
+---
+
+### Cursor IDE
+
+Cursor natively supports slash commands via `.cursor/commands/` directory.
+
+**Per-project installation:**
+```bash
+# Copy to your project
+cp -r commands/ /path/to/your/project/.cursor/commands/
+
+# Create context directory
 mkdir -p /path/to/your/project/.ai/context/
 ```
 
-### Option 2: Global installation (all projects)
+**Global installation (all projects):**
+```bash
+cp -r commands/ ~/.cursor/commands/
+```
+
+**Usage:** Type `/capture_issue` in the chat panel.
+
+---
+
+### Claude Code (Anthropic CLI)
+
+Claude Code uses `.claude/commands/` for slash commands.
+
+**Per-project installation:**
+```bash
+# Copy to your project
+cp -r commands/ /path/to/your/project/.claude/commands/
+
+# Create context directory
+mkdir -p /path/to/your/project/.ai/context/
+```
+
+**Global installation:**
+```bash
+cp -r commands/ ~/.claude/commands/
+```
+
+**Usage:** Type `/capture_issue` in Claude Code.
+
+---
+
+### Windsurf (Codeium)
+
+Windsurf uses `.windsurf/commands/` for custom commands.
+
+**Per-project installation:**
+```bash
+# Copy to your project
+cp -r commands/ /path/to/your/project/.windsurf/commands/
+
+# Create context directory
+mkdir -p /path/to/your/project/.ai/context/
+```
+
+**Global installation:**
+```bash
+cp -r commands/ ~/.windsurf/commands/
+```
+
+**Usage:** Type `/capture_issue` in Windsurf chat.
+
+---
+
+### VS Code (with Continue, Copilot Chat, or other AI extensions)
+
+VS Code AI extensions typically don't have native slash command support, but you can use these commands as **prompt templates**.
+
+**Option A: Manual prompt files**
+```bash
+# Create a prompts directory in your project
+mkdir -p /path/to/your/project/.prompts/
+cp -r commands/ /path/to/your/project/.prompts/
+
+# Create context directory
+mkdir -p /path/to/your/project/.ai/context/
+```
+
+Then copy/paste the prompt content when needed, or reference with `@.prompts/capture_issue.md`.
+
+**Option B: Continue extension (recommended)**
+
+If using [Continue](https://continue.dev/), add commands to your `~/.continue/config.json`:
+
+```json
+{
+  "slashCommands": [
+    {
+      "name": "capture_issue",
+      "description": "Document the problem",
+      "prompt": "... (paste content from capture_issue.md)"
+    }
+  ]
+}
+```
+
+Or use the file-based approach:
+```bash
+cp -r commands/ ~/.continue/commands/
+```
+
+**Option C: GitHub Copilot Chat**
+
+For Copilot Chat, use commands as reference files:
+1. Open the command file (e.g., `capture_issue.md`)
+2. In Copilot Chat, type: `@workspace #file:capture_issue.md Follow these instructions`
+
+---
+
+### Other AI IDEs
+
+Most AI IDEs follow similar patterns. Look for:
+
+- **Commands directory**: `.{ide-name}/commands/` or `~/.{ide-name}/commands/`
+- **Custom prompts**: Check IDE documentation for prompt template support
+- **Fallback**: Use as reference files and copy/paste when needed
+
+**Common locations:**
+| IDE | Commands Directory |
+|-----|-------------------|
+| Cursor | `.cursor/commands/` |
+| Claude Code | `.claude/commands/` |
+| Windsurf | `.windsurf/commands/` |
+| Zed | `.zed/prompts/` |
+| Continue | `~/.continue/commands/` |
+
+---
+
+### Context Directory Setup
+
+All installations should include the context directory for persistence:
 
 ```bash
-cp -r cursor-workflow-commands/commands/ ~/.cursor/commands/
+mkdir -p /path/to/your/project/.ai/context/
+```
+
+Add to `.gitignore` if you don't want to commit context files:
+```bash
+echo ".ai/context/" >> .gitignore
 ```
 
 ---
@@ -127,10 +264,14 @@ Commands persist context to `.ai/context/` for continuity across sessions:
 
 ```
 your-project/
-├── .cursor/
-│   └── commands/        # ← Commands go here
+├── .cursor/              # Cursor IDE
+│   └── commands/
+├── .claude/              # Claude Code
+│   └── commands/
+├── .windsurf/            # Windsurf
+│   └── commands/
 ├── .ai/
-│   └── context/         # ← Context persists here
+│   └── context/          # ← Context persists here (shared across IDEs)
 │       ├── last_capture.md
 │       ├── last_explore.md
 │       ├── execution_plan.md
@@ -138,10 +279,11 @@ your-project/
 └── src/
 ```
 
-This means:
+**Why this matters:**
 - `/explore` can reference what `/capture_issue` documented
 - `/execute_plan` knows what `/create_plan` decided
 - `/postmortem` can analyze the full journey
+- Context works across IDE switches (same `.ai/context/` directory)
 
 ---
 
@@ -190,7 +332,7 @@ These are markdown files. Edit them to fit your workflow:
 
 ### Example: Adding a `/deploy` command
 
-Create `.cursor/commands/deploy.md`:
+Create `commands/deploy.md` in your IDE's commands directory:
 
 ```markdown
 # Deployment Checklist
