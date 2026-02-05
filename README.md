@@ -49,9 +49,9 @@ These commands provide **structure without bureaucracy**. Each command is a prom
 └─────────────────────────────────────────────────────────────────┘
                                ↓
 ┌─────────────────────────────────────────────────────────────────┐
-│                   PHASE 4: REFLECTION                           │
+│                   PHASE 4: REFLECTION                            │
 ├─────────────────────────────────────────────────────────────────┤
-│                         /postmortem                             │
+│         /postmortem → /project_wrap_up (handover)                │
 └─────────────────────────────────────────────────────────────────┘
 ```
 
@@ -247,6 +247,7 @@ echo ".ai/context/" >> .gitignore
 | Command | Purpose |
 |---------|---------|
 | `/postmortem` | Analyze friction, document lessons learned |
+| `/project_wrap_up` | Final handover: security audit, context synthesis, onboarding docs for next contributor |
 | `/learning_opportunity` | Capture insights anytime |
 
 ### Utility
@@ -283,6 +284,7 @@ your-project/
 - `/explore` can reference what `/capture_issue` documented
 - `/execute_plan` knows what `/create_plan` decided
 - `/postmortem` can analyze the full journey
+- `/project_wrap_up` synthesizes context, runs a security audit, and produces handover docs for the next contributor or AI agent
 - Context works across IDE switches (same `.ai/context/` directory)
 
 ---
@@ -300,6 +302,7 @@ your-project/
 /code_review      # Automated security check
 /qa_checklist     # Manual testing guide
 /postmortem       # What did we learn?
+/project_wrap_up  # Security audit, handover docs, next-op briefing
 ```
 
 ### Bug Fix (Quick Workflow)
