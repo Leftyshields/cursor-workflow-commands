@@ -45,7 +45,7 @@ These commands provide **structure without bureaucracy**. Each command is a prom
 ┌─────────────────────────────────────────────────────────────────┐
 │                   PHASE 3: QUALITY ASSURANCE                    │
 ├─────────────────────────────────────────────────────────────────┤
-│            /code_review → /qa_checklist → /peer_review          │
+│  /code_review → /security_scan (opt) → /qa_checklist → /peer_review (opt) │
 └─────────────────────────────────────────────────────────────────┘
                                ↓
 ┌─────────────────────────────────────────────────────────────────┐
@@ -217,38 +217,41 @@ echo ".ai/context/" >> .gitignore
 
 ## Commands Reference
 
-### Phase 1: Planning & Design
+**Standard** steps are recommended every time; **optional** steps when scope, risk, or handover justifies them.
+
+### Phase 1: Planning & Design (all standard)
 
 | Command | Purpose |
 |---------|---------|
-| `/capture_issue` | Document the problem, current behavior, desired behavior |
-| `/explore` | Deep-dive into requirements, constraints, risks |
-| `/create_plan` | Generate atomic execution steps |
-| `/design_decisions` | Document design choices before coding |
-| `/pre_implementation_checklist` | Verify readiness before implementation |
+| `/capture_issue` | Document the problem, current/desired behavior, priority; get issue ID |
+| `/explore` | Deep-dive requirements, constraints, risks; persist exploration snapshot |
+| `/create_plan` | Generate atomic implementation steps from exploration |
+| `/design_decisions` | Document design choices, field mappings, integration points before coding |
+| `/pre_implementation_checklist` | Verify readiness (plan + design complete) before implementation |
 
 ### Phase 2: Implementation
 
 | Command | Purpose |
 |---------|---------|
-| `/execute_plan` | Follow the plan step-by-step |
-| `/tdd` | Test-driven development (Red-Green-Refactor cycle) |
+| `/execute_plan` | Follow the plan step-by-step; reference design decisions |
+| `/tdd` | *Optional.* Test-driven development (Red–Green–Refactor) for complex logic |
 
 ### Phase 3: Quality Assurance
 
 | Command | Purpose |
 |---------|---------|
-| `/code_review` | Automated security and quality review |
-| `/qa_checklist` | Generate manual testing checklist |
-| `/peer_review` | Structured human code review |
+| `/code_review` | Automated review: security, correctness, architecture, quality, performance |
+| `/security_scan` | *Optional.* Dedicated security pass: secrets, deps, auth, data at rest, encryption, proprietary/IP |
+| `/qa_checklist` | Manual testing checklist: happy path, edge cases, error handling, UX |
+| `/peer_review` | *Optional.* Human code review; accept/reject feedback with rationale |
 
 ### Phase 4: Reflection
 
 | Command | Purpose |
 |---------|---------|
-| `/postmortem` | Analyze friction, document lessons learned |
-| `/project_wrap_up` | Final handover: security audit, context synthesis, onboarding docs for next contributor |
-| `/learning_opportunity` | Capture insights anytime |
+| `/postmortem` | Analyze friction and rework; document lessons learned; improve process and docs |
+| `/project_wrap_up` | *Optional.* Final handover: security audit, context synthesis, onboarding docs, next-op briefing |
+| `/learning_opportunity` | *Optional.* Capture insights anytime |
 
 ### Utility
 
@@ -294,15 +297,16 @@ your-project/
 ### New Feature (Full Workflow)
 
 ```
-/capture_issue    # "Add user authentication"
-/explore          # Analyze requirements, identify OAuth vs password
-/create_plan      # Generate implementation steps
-/design_decisions # Document JWT vs session choice
-/execute_plan     # Build it step by step
-/code_review      # Automated security check
+/capture_issue    # Document problem, get issue ID
+/explore          # Requirements, constraints, risks
+/create_plan      # Atomic implementation steps
+/design_decisions # Design choices before coding
+/execute_plan     # Build step by step
+/code_review      # Automated security + quality review
+/security_scan    # Optional: dedicated security pass (secrets, deps, auth, data at rest)
 /qa_checklist     # Manual testing guide
 /postmortem       # What did we learn?
-/project_wrap_up  # Security audit, handover docs, next-op briefing
+/project_wrap_up  # Optional: handover, security audit, next-op briefing
 ```
 
 ### Bug Fix (Quick Workflow)

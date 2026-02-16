@@ -66,28 +66,27 @@ This document outlines the recommended workflow for implementing features in Epi
 
 ### Phase 3: Quality Assurance
 
-7. **Code Review** (`/code_review`)
-   - Automated security check
-   - Correctness verification
-   - Architecture review
-   - Code quality scan
-   - Performance check
+7. **Code Review** (`/code_review`) — *standard*
+   - Automated security check, correctness, architecture, code quality, performance
+   - Review specified scope (file, recent changes, or feature)
    
-   **Next:** Fix any issues found, then run `/qa_checklist`
+   **Next:** Fix any issues found, then run `/security_scan` (optional) or `/qa_checklist`
 
-8. **QA Checklist** (`/qa_checklist`)
-   - Manual testing checklist
-   - Happy path scenarios
-   - Edge cases
-   - Error handling
-   - Visual/UX checks
+8. **Security Scan** (`/security_scan`) — *optional*
+   - Dedicated pass: secrets, dependencies, input safety, auth, data at rest, encryption, proprietary/IP
+   - Use when handling sensitive data, before release, or for compliance; complements code_review
    
-   **Next:** Fix any issues found, then run `/peer_review`
+   **Next:** Fix critical/high findings, then run `/qa_checklist`
 
-9. **Peer Review** (`/peer_review`)
-   - Human code review (for complex changes)
-   - Evaluate suggestions critically
-   - Accept or reject with rationale
+9. **QA Checklist** (`/qa_checklist`) — *standard*
+   - Manual testing checklist: happy path, edge cases, error handling, visual/UX
+   - Human validation only (no automated tests)
+   
+   **Next:** Fix any issues found, then run `/peer_review` (optional)
+
+10. **Peer Review** (`/peer_review`) — *optional*
+   - Human code review for complex or high-impact changes
+   - Evaluate suggestions critically; accept or reject with rationale
    
    **Next:** Address review feedback, then proceed to deployment
 
@@ -95,20 +94,24 @@ This document outlines the recommended workflow for implementing features in Epi
 
 ### Phase 4: Deployment & Reflection
 
-10. **Deploy**
+11. **Deploy**
     - Test in staging (if available)
     - Deploy to production
     - Monitor for issues
    
     **Next:** Run `/postmortem` to reflect on the process
 
-11. **Postmortem** (`/postmortem`)
-    - Analyze friction points
-    - Identify rework
-    - Document lessons learned
-    - Update workflows and documentation
+12. **Postmortem** (`/postmortem`) — *standard*
+    - Analyze friction points, rework, missing docs
+    - Document lessons learned; propose workflow/doc updates
     
-    **Next:** Start next feature with improved process
+    **Next:** Run `/project_wrap_up` (optional) or start next feature
+
+13. **Project Wrap-up** (`/project_wrap_up`) — *optional*
+    - Final handover: security audit, context synthesis, onboarding docs, next-op briefing
+    - Use when handing off, releasing, or preparing for the next contributor or AI agent
+    
+    **Next:** Start next feature or hand off
 
 ---
 
@@ -118,27 +121,35 @@ For smaller changes or bug fixes:
 
 1. `/capture_issue` - Document the issue
 2. `/execute_plan` - Implement the fix
-3. `/peer_review` - Review changes
-4. Deploy
+3. `/code_review` - Automated review
+4. `/security_scan` - Optional, if the change touches auth, secrets, or sensitive data
+5. `/peer_review` - Review changes (optional for trivial fixes)
+6. Deploy
 
 ---
 
-## 📋 Command Reference
+## 📋 Standard vs optional steps
 
-| Command | Purpose | When to Run |
-|---------|---------|-------------|
-| `/capture_issue` | Document the problem | Start of new feature |
-| `/explore` | Analyze requirements | After capturing issue |
-| `/create_plan` | Create execution plan | After exploration |
-| `/design_decisions` | Document design choices | After planning, before implementation |
-| `/pre_implementation_checklist` | Verify readiness | Before starting implementation |
-| `/execute_plan` | Implement feature | After checklist complete |
-| `/tdd` | Test-driven development | During implementation (complex logic) |
-| `/code_review` | Automated code review | After implementation, before QA |
-| `/qa_checklist` | Manual testing guide | After code review |
-| `/peer_review` | Human code review | After QA (complex changes) |
-| `/postmortem` | Process reflection | After deployment |
-| `/learning_opportunity` | Document learning | Anytime insights occur |
+| Step | Type | What it does |
+|------|------|----------------|
+| `/capture_issue` | Standard | Log the problem, current/desired behavior, priority; get issue ID |
+| `/explore` | Standard | Deep-dive requirements, constraints, risks; persist exploration snapshot |
+| `/create_plan` | Standard | Turn exploration into atomic implementation steps |
+| `/design_decisions` | Standard | Lock design choices, field mappings, integration points before coding |
+| `/pre_implementation_checklist` | Standard | Confirm plan and design are complete; gate before coding |
+| `/execute_plan` | Standard | Implement step-by-step using plan and design decisions |
+| `/tdd` | Optional | Red–green–refactor for complex logic during implementation |
+| `/code_review` | Standard | Automated review: security, correctness, architecture, quality, performance |
+| `/security_scan` | Optional | Dedicated security pass: secrets, deps, auth, data at rest, encryption, proprietary/IP |
+| `/qa_checklist` | Standard | Human manual-test checklist (happy path, edge cases, UX) |
+| `/peer_review` | Optional | Human review of changes; accept/reject feedback with rationale |
+| `/postmortem` | Standard | Reflect on friction and rework; improve process and docs |
+| `/project_wrap_up` | Optional | Handover: security audit, onboarding docs, next-op briefing |
+| `/learning_opportunity` | Optional | Capture insights anytime |
+| `/show_context` | Utility | Show current context files |
+| `/workflow` | Utility | Show this workflow |
+
+**Standard** = recommended for every feature or bugfix. **Optional** = use when scope, risk, or handover justifies it.
 
 ---
 
@@ -161,4 +172,4 @@ For smaller changes or bug fixes:
 
 ---
 
-**Last Updated:** 2026-01-19
+**Last Updated:** 2025-02-04
